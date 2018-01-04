@@ -83,7 +83,6 @@ class Player {
         }
         break;
       case 'down':
-        console.log(this.y);
         if (this.y === 391) { // border
           break;
         }
