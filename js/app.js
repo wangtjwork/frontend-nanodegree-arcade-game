@@ -43,7 +43,7 @@ class Enemy {
 class Player {
   constructor() {
     this.x = 200;
-    this.y = 400;
+    this.y = 390;
     this.speed = 10;
     this.sprite = 'images/char-boy.png';
   }
@@ -57,7 +57,22 @@ class Player {
   }
 
   handleInput(keyType) {
-    console.log(keyType);
+    switch(keyType) {
+      case 'up':
+        this.y -= 82;
+        break;
+      case 'down':
+        this.y += 82;
+        break;
+      case 'left':
+        this.x -= 100;
+        break;
+      case 'right':
+        this.x += 100;
+        break;
+      default:
+        break;
+    }
   }
 }
 
@@ -79,6 +94,6 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
+    e.preventDefault();
     player.handleInput(allowedKeys[e.keyCode]);
 });
