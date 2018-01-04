@@ -32,6 +32,15 @@ class Enemy {
       this.y = Enemy.ROWHEIGHT[generateRandomInclusive(0,2)];
       this.speed = generateRandomInclusive(200, 500);
     }
+    this.checkCollision();
+  }
+
+  // check for collision, when the user is at the same height,
+  // and within 50px of the enemy
+  checkCollision() {
+    if (this.y === player.y && this.x >= player.x - 50 && this.x <= player.x + 50) {
+      player.reset(); // player return to initial state
+    }
   }
 
   // Draw the enemy on the screen, required method for game
@@ -46,9 +55,14 @@ class Enemy {
 class Player {
   constructor() {
     this.x = 200;
-    this.y = 390;
-    this.speed = 10;
+    this.y = 391;
     this.sprite = 'images/char-boy.png';
+  }
+
+  // reset position back to initial position
+  reset() {
+    this.x = 200;
+    this.y = 391;
   }
 
   update(dt) {
@@ -59,28 +73,30 @@ class Player {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
+  // change position on keyboard input
   handleInput(keyType) {
     switch(keyType) {
       case 'up':
         this.y -= 82;
-        if (this.y < 0) {
-          console.log('victory!');
+        if (this.y < 0) { // victory! reached water
+          this.reset();
         }
         break;
       case 'down':
-        if (this.y === 390) {
+        console.log(this.y);
+        if (this.y === 391) { // border
           break;
         }
         this.y += 82;
         break;
       case 'left':
-        if (this.x == 0) {
+        if (this.x == 0) { // border
           break;
         }
         this.x -= 100;
         break;
       case 'right':
-        if (this.x === 400) {
+        if (this.x === 400) { // border
           break;
         }
         this.x += 100;
@@ -96,9 +112,10 @@ class Player {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 const firstEnemy = new Enemy(0, 150);
+const secondEnemy = new Enemy(1, 250);
+const thirdEnemy = new Enemy(2, 300);
 const player = new Player();
-const allEnemies = [firstEnemy];
-
+const allEnemies = [firstEnemy, secondEnemy, thirdEnemy];
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
