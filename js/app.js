@@ -1,3 +1,7 @@
+function generateRandomInclusive(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 // Enemies our player must avoid
 class Enemy {
   constructor(initialY, speed) {
@@ -6,9 +10,10 @@ class Enemy {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.x = 0;
+    this.x = -100;
     this.y = initialY;
     this.speed = speed;
+    this.rowHeight = [63, 145, 227];
     this.sprite = 'images/enemy-bug.png';
   }
 
@@ -19,7 +24,11 @@ class Enemy {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.speed * dt;
-    if (this.x > )
+    if (this.x > 505) { // bug moved to the right side of screen
+      this.x = -100;
+      this.y = this.rowHeight[generateRandomInclusive(0,2)];
+      this.speed = generateRandomInclusive(200, 500);
+    }
   }
 
   // Draw the enemy on the screen, required method for game
@@ -33,8 +42,8 @@ class Enemy {
 // a handleInput() method.
 class Player {
   constructor() {
-    this.x = 255;
-    this.y = 255;
+    this.x = 200;
+    this.y = 400;
     this.speed = 10;
     this.sprite = 'images/char-boy.png';
   }
@@ -56,7 +65,7 @@ class Player {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-const firstEnemy = new Enemy(2, 20);
+const firstEnemy = new Enemy(63, 100);
 const player = new Player();
 const allEnemies = [firstEnemy];
 
