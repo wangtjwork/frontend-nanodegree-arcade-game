@@ -60,14 +60,26 @@ class Player {
     switch(keyType) {
       case 'up':
         this.y -= 82;
+        if (this.y < 0) {
+          console.log('victory!');
+        }
         break;
       case 'down':
+        if (this.y === 390) {
+          break;
+        }
         this.y += 82;
         break;
       case 'left':
+        if (this.x == 0) {
+          break;
+        }
         this.x -= 100;
         break;
       case 'right':
+        if (this.x === 400) {
+          break;
+        }
         this.x += 100;
         break;
       default:
