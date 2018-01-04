@@ -4,17 +4,20 @@ function generateRandomInclusive(min, max) {
 
 // Enemies our player must avoid
 class Enemy {
-  constructor(initialY, speed) {
+  constructor(rowIndex, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.x = -100;
-    this.y = initialY;
+    this.y = Enemy.ROWHEIGHT[rowIndex];
     this.speed = speed;
-    this.rowHeight = [63, 145, 227];
     this.sprite = 'images/enemy-bug.png';
+  }
+
+  static get ROWHEIGHT() {
+    return [63, 145, 227];
   }
 
   // Update the enemy's position, required method for game
@@ -26,7 +29,7 @@ class Enemy {
     this.x += this.speed * dt;
     if (this.x > 505) { // bug moved to the right side of screen
       this.x = -100;
-      this.y = this.rowHeight[generateRandomInclusive(0,2)];
+      this.y = Enemy.ROWHEIGHT[generateRandomInclusive(0,2)];
       this.speed = generateRandomInclusive(200, 500);
     }
   }
@@ -92,7 +95,7 @@ class Player {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-const firstEnemy = new Enemy(63, 100);
+const firstEnemy = new Enemy(0, 150);
 const player = new Player();
 const allEnemies = [firstEnemy];
 
